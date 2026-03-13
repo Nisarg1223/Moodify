@@ -1,7 +1,7 @@
 const userModel = require("../models/user.model.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const blacklistModel = require('../models/blacklist.model.js');
 async function registerUser(req, res) {
   const { username, email, password } = req.body;
 
@@ -22,7 +22,7 @@ async function registerUser(req, res) {
   });
 
   const token = jwt.sign({
-    id:user_id,
+    id:user._id,
     username:user.username
   },process.env.JWT_SECRET,
 {
@@ -34,7 +34,7 @@ async function registerUser(req, res) {
     res.status(201).json({
         message:'user registered sucessfully',
         user:{
-            id:user_id,
+            id:user._id,
             username:user.username,
             email:user.email
         }
@@ -48,19 +48,19 @@ async function loginUser(req,res){
             {username},
             {email}
         ]
-    });
+    }).select('+password');
 
     if(!user){
-        res.status(404).json({
-            message:'user not found'
+      return  res.status(400).json({
+            message:'invalid credentials'
         })
     }
 
   const isPasswordValid = await bcrypt.compare(password,user.password);
 
   if(!isPasswordValid){
-    return res.status(409).json({
-        message:'invalid password'
+    return res.status(400).json({
+        message:'invalid credentials'
     })
   }
 
@@ -85,7 +85,30 @@ async function loginUser(req,res){
     }
   })
 }
+async function getMe(req,res){
+  const user = await userModel.findById(req.user.id)
+
+  res.status(200).json({
+    message:'user fetched sucessfully',
+    user
+  })
+}
+async function logout(req,res){
+  const token = req.cookies.token;
+  const blacklistedToken = await blacklistModel.create({
+    token:token
+  })
+
+
+  res.clearCookie('token');
+
+  res.status(201).json({
+    message:"loggedout sucessfully"
+  })
+}
 module.exports = {
   registerUser,
-  loginUser
+  loginUser,
+   getMe,
+   logout
 };
