@@ -1,14 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import FaceExpression from './features/Expression/components/FaceExpression'
-
+import {BrowserRouter} from 'react-router-dom'
+import AllRoutes from './allRoutes'
+import '../src/features/shared/styles/global.scss'
+import { AuthProvider } from './features/auth/auth.context'
 function App() {
-  const [count, setCount] = useState(0)
+ 
 
   return (
-  <FaceExpression/>
+     <BrowserRouter>
+     <AuthProvider>
+      <AllRoutes/>
+      </AuthProvider>
+     </BrowserRouter>
   )
 }
 
