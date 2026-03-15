@@ -2,6 +2,7 @@ const userModel = require("../models/user.model.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const blacklistModel = require('../models/blacklist.model.js');
+const redis = require('../src/config/cache.js');
 async function registerUser(req, res) {
   const { username, email, password } = req.body;
 
@@ -95,9 +96,8 @@ async function getMe(req,res){
 }
 async function logout(req,res){
   const token = req.cookies.token;
-  const blacklistedToken = await blacklistModel.create({
-    token:token
-  })
+
+   await redis.set(token, Date.now().toString(),"EX",60 * 60);
 
 
   res.clearCookie('token');

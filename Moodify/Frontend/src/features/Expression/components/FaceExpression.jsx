@@ -14,11 +14,9 @@ export default function FaceExpression() {
   const [expression, setExpression] = useState("Not detecting");
   const [detecting, setDetecting] = useState(false);
 
-
   useEffect(() => {
     initFaceLandmarker(faceLandmarkerRef, () => startCamera(videoRef));
   }, []);
-
 
   function handleDetect() {
     setDetecting(true);
@@ -31,8 +29,6 @@ export default function FaceExpression() {
       setExpression
     });
   }
-
-
   return (
     <div style={{ textAlign: "center", marginTop: "40px" }}>
 

@@ -21,7 +21,6 @@ export async function initFaceLandmarker(faceLandmarkerRef, startCamera) {
   startCamera();
 }
 
-
 export async function startCamera(videoRef) {
 
   try {
@@ -42,8 +41,6 @@ export async function startCamera(videoRef) {
     console.error("Camera error:", err);
   }
 }
-
-
 
 export function detectExpression({
   videoRef,
