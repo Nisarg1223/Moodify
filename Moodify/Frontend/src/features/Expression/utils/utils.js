@@ -45,7 +45,7 @@ export async function startCamera(videoRef) {
 export function detectExpression({
   videoRef,
   faceLandmarkerRef,
-  detecting,
+  detectingRef,     
   setExpression
 }) {
 
@@ -54,7 +54,7 @@ export function detectExpression({
 
   function frame() {
 
-    if (!detecting) return;
+    if (!detectingRef.current) return;
 
     if (!video || !landmarker) {
       requestAnimationFrame(frame);

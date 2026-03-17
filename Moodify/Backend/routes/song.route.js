@@ -11,4 +11,5 @@ SongRouter.post(
     ]),
     songController.uploadSong
 );
+SongRouter.get('/',songController.getSong)
 module.exports = SongRouter;
