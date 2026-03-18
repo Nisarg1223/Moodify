@@ -1,0 +1,668 @@
+// ================================================
+//  MOODIFY — Melomaniac Style SCSS
+//  Beginner friendly: only . and # selectors
+// ================================================
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+// ── Variables ─────────────────────────────────
+$black      : #0a0a0a;
+$dark       : #121212;
+$card       : #181818;
+$card-hover : #1f1f1f;
+$border     : #282828;
+$pink       : #f72585;
+$pink-dim   : rgba(247, 37, 133, 0.12);
+$white      : #ffffff;
+$grey       : #a7a7a7;
+$grey-dark  : #535353;
+$green      : #1db954;
+
+// ── Reset ──────────────────────────────────────
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  background: $black;
+  color: $white;
+}
+
+// ================================================
+//  LAYOUT
+// ================================================
+
+.app-wrapper {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: 1fr 72px;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+// ================================================
+//  SIDEBAR
+// ================================================
+
+.sidebar {
+  grid-column: 1;
+  grid-row: 1;
+  background: $black;
+  border-right: 1px solid $border;
+  padding: 16px 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar::-webkit-scrollbar { width: 0; }
+
+// Logo
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px 20px 20px;
+  margin-bottom: 4px;
+}
+
+.sidebar-logo-icon { font-size: 20px; }
+
+.sidebar-logo-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $white;
+  letter-spacing: -0.3px;
+}
+
+// Section labels like "DISCOVERY"
+.sidebar-section-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $grey-dark;
+  padding: 16px 20px 6px 20px;
+}
+
+.sidebar-nav { list-style: none; }
+
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: $grey;
+  transition: color 0.15s;
+  white-space: nowrap;
+  border-left: 3px solid transparent;
+}
+
+.sidebar-nav-item:hover { color: $white; }
+
+.sidebar-nav-item.active {
+  color: $white;
+  border-left: 3px solid $pink;
+  background: rgba(255,255,255,0.04);
+}
+
+.sidebar-nav-icon {
+  font-size: 0.95rem;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+// ================================================
+//  MAIN CONTENT
+// ================================================
+
+.main-content {
+  grid-column: 2;
+  grid-row: 1;
+  background: $dark;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+}
+
+.main-content::-webkit-scrollbar { width: 6px; }
+.main-content::-webkit-scrollbar-track { background: transparent; }
+.main-content::-webkit-scrollbar-thumb {
+  background: $grey-dark;
+  border-radius: 3px;
+}
+
+// ── Top navbar ─────────────────────────────────
+
+.topnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px;
+  position: sticky;
+  top: 0;
+  background: rgba(18,18,18,0.95);
+  backdrop-filter: blur(10px);
+  z-index: 10;
+  border-bottom: 1px solid $border;
+}
+
+.topnav-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.topnav-subtitle {
+  font-size: 0.75rem;
+  color: $grey;
+  margin-top: 2px;
+}
+
+// Mood badge
+#mood-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: $pink-dim;
+  border: 1px solid rgba(247,37,133,0.4);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: $pink;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+// ── Content padding wrapper ─────────────────────
+
+.content-pad {
+  padding: 24px 28px 32px 28px;
+}
+
+// ── Camera Section ──────────────────────────────
+
+.camera-section {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, $card 100%);
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.camera-video-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.camera-video-wrap video {
+  width: 240px;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+  background: #000;
+  border: 1px solid $border;
+  transition: filter 0.5s;
+}
+
+.camera-video-wrap video.blurred {
+  filter: blur(10px) brightness(0.35);
+}
+
+#camera-live-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(0,0,0,0.8);
+  border: 1px solid $pink;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: $pink;
+  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#camera-live-badge::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: $pink;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.camera-info { flex: 1; min-width: 0; }
+
+.camera-info-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.camera-info-desc {
+  font-size: 0.8rem;
+  color: $grey;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  max-width: 360px;
+}
+
+.expression-text {
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: $grey;
+}
+
+.expression-text span {
+  color: $white;
+  font-weight: 600;
+}
+
+#detect-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: $pink;
+  color: $white;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: background 0.15s, transform 0.12s;
+}
+
+#detect-btn:hover {
+  background: #d91a6e;
+  transform: scale(1.03);
+}
+
+#detect-btn:active { transform: scale(0.97); }
+
+// ── Section heading ─────────────────────────────
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.section-heading-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.section-heading-link {
+  font-size: 0.68rem;
+  color: $grey-dark;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+
+.section-heading-link:hover { color: $white; }
+
+// ── Songs Table ─────────────────────────────────
+
+.songs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 32px;
+}
+
+.songs-table-header th {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $grey-dark;
+  padding: 6px 12px;
+  text-align: left;
+  border-bottom: 1px solid $border;
+}
+
+// Align plays and duration right like Melomaniac
+.songs-table-header .col-plays { text-align: right; }
+.songs-table-header .col-dur   { text-align: right; padding-right: 20px; }
+
+.songs-table tbody tr {
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.songs-table tbody tr:hover { background: $card-hover; }
+
+.songs-table tbody tr.playing { background: rgba(247,37,133,0.07); }
+
+.songs-table td {
+  padding: 8px 12px;
+  font-size: 0.84rem;
+  vertical-align: middle;
+}
+
+.song-number {
+  color: $grey-dark;
+  font-size: 0.82rem;
+  width: 28px;
+  text-align: center;
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+
+.song-number.is-playing { color: $pink; font-size: 0.9rem; }
+
+.song-title-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.song-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: $border;
+}
+
+.song-name {
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: $white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+.song-artist-small {
+  font-size: 0.73rem;
+  color: $grey;
+  margin-top: 1px;
+}
+
+.song-album {
+  color: $grey;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+  display: block;
+}
+
+.song-plays {
+  color: $grey;
+  font-size: 0.8rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  display: block;
+}
+
+.song-heart {
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.15s;
+  background: none;
+  border: none;
+  color: $grey-dark;
+}
+
+.song-heart:hover { color: $pink; }
+.song-heart.liked  { color: $pink; }
+
+.song-duration {
+  color: $grey-dark;
+  font-size: 0.8rem;
+  text-align: right;
+  display: block;
+  padding-right: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+// ── Loading ─────────────────────────────────────
+
+#loading-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 32px 0;
+  color: $grey;
+  font-size: 0.82rem;
+}
+
+.loading-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $pink;
+  animation: dot-up 0.7s ease-in-out infinite;
+}
+
+.loading-dot:nth-child(2) { animation-delay: 0.12s; }
+.loading-dot:nth-child(3) { animation-delay: 0.24s; }
+
+@keyframes dot-up {
+  0%, 100% { transform: translateY(0);   opacity: 0.3; }
+  50%       { transform: translateY(-6px); opacity: 1;   }
+}
+
+// ================================================
+//  BOTTOM PLAYER BAR
+// ================================================
+
+.player-bar {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  background: #0d0d0d;
+  border-top: 1px solid $border;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 72px;
+  z-index: 100;
+}
+
+// Left — now playing
+.player-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 240px;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.player-bar-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: $border;
+}
+
+.player-bar-track {
+  overflow: hidden;
+  flex: 1;
+}
+
+.player-bar-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: $white;
+}
+
+.player-bar-artist {
+  font-size: 0.7rem;
+  color: $grey;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-bar-heart {
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: $pink;
+  flex-shrink: 0;
+}
+
+// Center — controls
+.player-bar-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  max-width: 460px;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.player-control-btn {
+  background: none;
+  border: none;
+  color: $grey;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: color 0.15s, transform 0.1s;
+  padding: 4px;
+  line-height: 1;
+}
+
+.player-control-btn:hover {
+  color: $white;
+  transform: scale(1.1);
+}
+
+#play-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: $white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: $black;
+  transition: transform 0.1s, background 0.1s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+#play-btn:hover {
+  transform: scale(1.08);
+  background: #e0e0e0;
+}
+
+.player-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.player-time {
+  font-size: 0.65rem;
+  color: $grey-dark;
+  min-width: 30px;
+  font-variant-numeric: tabular-nums;
+}
+
+.player-time.right { text-align: right; }
+
+.player-progress-track {
+  flex: 1;
+  height: 3px;
+  background: $grey-dark;
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  transition: height 0.1s;
+}
+
+.player-progress-track:hover { height: 5px; }
+
+.player-progress-fill {
+  height: 100%;
+  background: $white;
+  border-radius: 2px;
+  transition: width 0.3s linear;
+}
+
+.player-progress-track:hover .player-progress-fill { background: $pink; }
+
+// Right — volume
+.player-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 160px;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.player-volume-icon {
+  font-size: 0.85rem;
+  color: $grey;
+}
+
+.player-volume-track {
+  width: 70px;
+  height: 3px;
+  background: $grey-dark;
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.player-volume-fill {
+  height: 100%;
+  width: 70%;
+  background: $white;
+  border-radius: 2px;
+}
