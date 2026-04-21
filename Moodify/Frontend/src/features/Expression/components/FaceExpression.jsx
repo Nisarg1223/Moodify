@@ -5,7 +5,7 @@ import { useSong } from "../hooks/useSong";
 import { SongContext } from "../song.context";
 import Player from "./Player";
 import "../styles/expression.scss";
-
+import { Link } from "react-router-dom";
 const expressionToMood = {
   "😊 Smiling": "Happy",
   "😢 Sad":     "Sad",
@@ -22,6 +22,7 @@ export default function FaceExpression() {
   const [expression,  setExpression]  = useState("Not detecting");
   const [detected,    setDetected]    = useState(false);
   const [isDetecting, setIsDetecting] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const { loading, songs, handlegetSong } = useSong();
 
@@ -80,9 +81,15 @@ export default function FaceExpression() {
   return (
     <div className="app-wrapper">
 
-      {/* ══ SIDEBAR ══════════════════════════════ */}
-      <aside className="sidebar">
+      {/* ══ SIDEBAR OVERLAY ════════════════════ */}
+      <div 
+        className={`sidebar-overlay ${isSidebarOpen ? 'open' : ''}`}
+        onClick={() => setIsSidebarOpen(false)}
+      />
 
+      {/* ══ SIDEBAR ══════════════════════════════ */}
+      <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+        <button className="sidebar-close-btn" onClick={() => setIsSidebarOpen(false)}>✕</button>
         <div className="sidebar-logo">
           <span className="sidebar-logo-icon">🎵</span>
           <span className="sidebar-logo-text">Moodify</span>
@@ -106,9 +113,10 @@ export default function FaceExpression() {
           <li className="sidebar-nav-item">
             <span className="sidebar-nav-icon">📅</span> Daily Weekly
           </li>
-          <li className="sidebar-nav-item">
-            <span className="sidebar-nav-icon">🎯</span> Made For You
-          </li>
+          <Link to="/about-developer" className="sidebar-nav-item about">
+  <span className="sidebar-nav-icon">🎯</span>
+  About Developer
+</Link>
           <li className="sidebar-nav-item">
             <span className="sidebar-nav-icon">🎲</span> Daily Mix
           </li>
@@ -137,9 +145,14 @@ export default function FaceExpression() {
 
         {/* Sticky top nav */}
         <div className="topnav">
-          <div>
-            <h1 className="topnav-title">Good Evening 👋</h1>
-            <p className="topnav-subtitle">Let your face pick your playlist</p>
+          <div className="topnav-left">
+            <button className="hamburger-btn" onClick={() => setIsSidebarOpen(true)}>
+              ☰
+            </button>
+            <div>
+              <h1 className="topnav-title">Good Evening</h1>
+              <p className="topnav-subtitle">Let your face pick your playlist</p>
+            </div>
           </div>
           {detected && (
             <div id="mood-badge">

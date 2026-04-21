@@ -6,17 +6,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 // ── Variables ─────────────────────────────────
-$black      : #0a0a0a;
-$dark       : #121212;
-$card       : #181818;
+$black : #0a0a0a;
+$dark : #121212;
+$card : #181818;
 $card-hover : #1f1f1f;
-$border     : #282828;
-$pink       : #f72585;
-$pink-dim   : rgba(247, 37, 133, 0.12);
-$white      : #ffffff;
-$grey       : #a7a7a7;
-$grey-dark  : #535353;
-$green      : #1db954;
+$border : #282828;
+$pink : #f72585;
+$pink-dim : rgba(247, 37, 133, 0.12);
+$white : #ffffff;
+$grey : #a7a7a7;
+$grey-dark : #535353;
+$green : #1db954;
 
 // ── Reset ──────────────────────────────────────
 * {
@@ -25,9 +25,10 @@ $green      : #1db954;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
   font-family: 'Inter', sans-serif;
   background: $black;
   color: $white;
@@ -41,9 +42,13 @@ html, body {
   display: grid;
   grid-template-columns: 220px 1fr;
   grid-template-rows: 1fr 72px;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.about {
+  text-decoration: none;
 }
 
 // ================================================
@@ -60,7 +65,9 @@ html, body {
   overflow-x: hidden;
 }
 
-.sidebar::-webkit-scrollbar { width: 0; }
+.sidebar::-webkit-scrollbar {
+  width: 0;
+}
 
 // Logo
 .sidebar-logo {
@@ -71,7 +78,9 @@ html, body {
   margin-bottom: 4px;
 }
 
-.sidebar-logo-icon { font-size: 20px; }
+.sidebar-logo-icon {
+  font-size: 20px;
+}
 
 .sidebar-logo-text {
   font-size: 1.1rem;
@@ -90,7 +99,9 @@ html, body {
   padding: 16px 20px 6px 20px;
 }
 
-.sidebar-nav { list-style: none; }
+.sidebar-nav {
+  list-style: none;
+}
 
 .sidebar-nav-item {
   display: flex;
@@ -106,12 +117,14 @@ html, body {
   border-left: 3px solid transparent;
 }
 
-.sidebar-nav-item:hover { color: $white; }
+.sidebar-nav-item:hover {
+  color: $white;
+}
 
 .sidebar-nav-item.active {
   color: $white;
   border-left: 3px solid $pink;
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .sidebar-nav-icon {
@@ -119,6 +132,42 @@ html, body {
   width: 16px;
   text-align: center;
   flex-shrink: 0;
+}
+
+// Sidebar Overlay & Close/Open Buttons
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 999;
+}
+
+.sidebar-overlay.open {
+  display: block;
+}
+
+.sidebar-close-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: $white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1001;
+}
+
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: $white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  margin-right: 14px;
 }
 
 // ================================================
@@ -132,10 +181,17 @@ html, body {
   overflow-y: auto;
   overflow-x: hidden;
   padding: 0;
+  width: 100%;
 }
 
-.main-content::-webkit-scrollbar { width: 6px; }
-.main-content::-webkit-scrollbar-track { background: transparent; }
+.main-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.main-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .main-content::-webkit-scrollbar-thumb {
   background: $grey-dark;
   border-radius: 3px;
@@ -150,7 +206,7 @@ html, body {
   padding: 16px 28px;
   position: sticky;
   top: 0;
-  background: rgba(18,18,18,0.95);
+  background: rgba(18, 18, 18, 0.95);
   backdrop-filter: blur(10px);
   z-index: 10;
   border-bottom: 1px solid $border;
@@ -173,7 +229,7 @@ html, body {
   align-items: center;
   gap: 6px;
   background: $pink-dim;
-  border: 1px solid rgba(247,37,133,0.4);
+  border: 1px solid rgba(247, 37, 133, 0.4);
   border-radius: 999px;
   padding: 5px 14px;
   font-size: 0.75rem;
@@ -226,7 +282,7 @@ html, body {
   position: absolute;
   top: 8px;
   left: 8px;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0, 0, 0, 0.8);
   border: 1px solid $pink;
   border-radius: 999px;
   padding: 2px 10px;
@@ -249,11 +305,21 @@ html, body {
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
-.camera-info { flex: 1; min-width: 0; }
+.camera-info {
+  flex: 1;
+  min-width: 0;
+}
 
 .camera-info-title {
   font-size: 1.15rem;
@@ -303,7 +369,9 @@ html, body {
   transform: scale(1.03);
 }
 
-#detect-btn:active { transform: scale(0.97); }
+#detect-btn:active {
+  transform: scale(0.97);
+}
 
 // ── Section heading ─────────────────────────────
 
@@ -312,6 +380,8 @@ html, body {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 14px;
+  margin-left: 0;
+  padding: 0;
 }
 
 .section-heading-title {
@@ -330,7 +400,9 @@ html, body {
   transition: color 0.15s;
 }
 
-.section-heading-link:hover { color: $white; }
+.section-heading-link:hover {
+  color: $white;
+}
 
 // ── Songs Table ─────────────────────────────────
 
@@ -352,22 +424,42 @@ html, body {
 }
 
 // Align plays and duration right like Melomaniac
-.songs-table-header .col-plays { text-align: right; }
-.songs-table-header .col-dur   { text-align: right; padding-right: 20px; }
+.songs-table-header .col-plays {
+  text-align: right;
+}
+
+.songs-table-header .col-dur {
+  text-align: right;
+  padding-right: 20px;
+}
 
 .songs-table tbody tr {
   cursor: pointer;
   transition: background 0.1s;
 }
 
-.songs-table tbody tr:hover { background: $card-hover; }
+.songs-table tbody tr:hover {
+  background: $card-hover;
+}
 
-.songs-table tbody tr.playing { background: rgba(247,37,133,0.07); }
+.songs-table tbody tr.playing {
+  background: rgba(247, 37, 133, 0.07);
+}
 
 .songs-table td {
   padding: 8px 12px;
   font-size: 0.84rem;
   vertical-align: middle;
+}
+
+.songs-table-header th:first-child,
+.songs-table td:first-child {
+  padding-left: 0;
+}
+
+.songs-table-header th:last-child,
+.songs-table td:last-child {
+  padding-right: 0;
 }
 
 .song-number {
@@ -379,7 +471,10 @@ html, body {
   font-variant-numeric: tabular-nums;
 }
 
-.song-number.is-playing { color: $pink; font-size: 0.9rem; }
+.song-number.is-playing {
+  color: $pink;
+  font-size: 0.9rem;
+}
 
 .song-title-cell {
   display: flex;
@@ -439,8 +534,13 @@ html, body {
   color: $grey-dark;
 }
 
-.song-heart:hover { color: $pink; }
-.song-heart.liked  { color: $pink; }
+.song-heart:hover {
+  color: $pink;
+}
+
+.song-heart.liked {
+  color: $pink;
+}
 
 .song-duration {
   color: $grey-dark;
@@ -471,12 +571,26 @@ html, body {
   animation: dot-up 0.7s ease-in-out infinite;
 }
 
-.loading-dot:nth-child(2) { animation-delay: 0.12s; }
-.loading-dot:nth-child(3) { animation-delay: 0.24s; }
+.loading-dot:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.loading-dot:nth-child(3) {
+  animation-delay: 0.24s;
+}
 
 @keyframes dot-up {
-  0%, 100% { transform: translateY(0);   opacity: 0.3; }
-  50%       { transform: translateY(-6px); opacity: 1;   }
+
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
 }
 
 // ================================================
@@ -613,7 +727,9 @@ html, body {
   font-variant-numeric: tabular-nums;
 }
 
-.player-time.right { text-align: right; }
+.player-time.right {
+  text-align: right;
+}
 
 .player-progress-track {
   flex: 1;
@@ -625,7 +741,9 @@ html, body {
   transition: height 0.1s;
 }
 
-.player-progress-track:hover { height: 5px; }
+.player-progress-track:hover {
+  height: 5px;
+}
 
 .player-progress-fill {
   height: 100%;
@@ -634,7 +752,9 @@ html, body {
   transition: width 0.3s linear;
 }
 
-.player-progress-track:hover .player-progress-fill { background: $pink; }
+.player-progress-track:hover .player-progress-fill {
+  background: $pink;
+}
 
 // Right — volume
 .player-bar-right {
@@ -665,4 +785,120 @@ html, body {
   width: 70%;
   background: $white;
   border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .app-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background: $black;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    border-right: 1px solid $border;
+    display: block; // override display none
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-close-btn {
+    display: block;
+  }
+
+  .hamburger-btn {
+    display: block;
+  }
+
+  .main-content {
+    flex: 1;
+    width: 100%;
+    overflow: visible;
+    padding-bottom: 90px;
+  }
+
+  .topnav {
+    padding: 12px 16px;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+  }
+
+  .content-pad {
+    padding: 16px;
+  }
+
+  .camera-section {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .camera-video-wrap {
+    width: 100%;
+  }
+
+  .camera-video-wrap video {
+    width: 100%;
+    height: auto;
+  }
+
+  .camera-info {
+    width: 100%;
+    text-align: center;
+  }
+
+  .camera-info-desc {
+    max-width: 100%;
+  }
+
+  .songs-table-header th.col-dur,
+  .songs-table td .song-duration {
+
+    display: none;
+  }
+
+  .song-album {
+    max-width: 100px;
+  }
+
+  .player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    flex-wrap: wrap;
+    background: rgba(13, 13, 13, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .player-bar-left {
+    width: 100%;
+    margin-bottom: 8px;
+    justify-content: flex-start;
+  }
+
+  .player-bar-center {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .player-bar-right {
+    display: none;
+  }
 }

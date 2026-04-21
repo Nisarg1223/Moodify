@@ -28,8 +28,8 @@ $ease          : cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html, body, #root {
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
+  overflow-x: hidden;
   width: 100%;
 }
 
@@ -37,21 +37,19 @@ html, body, #root {
 .login-page {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   max-width: 100vw;
-  overflow: hidden;
+  overflow-x: hidden;
   font-family: 'Outfit', sans-serif;
   background: $black;
-  position: fixed;
-  inset: 0;
 }
 
 // ── LEFT: Image Panel ─────────────────────────────────────────────
 .image-panel {
   position: relative;
   overflow: hidden;
-  height: 100vh;
+  min-height: 100vh;
   transition: opacity 0.6s ease;
   cursor:pointer;
   &.fading { opacity: 0; }
@@ -447,13 +445,13 @@ html, body, #root {
 @media (max-width: 768px) {
   .login-page {
     grid-template-columns: 1fr;
-    grid-template-rows: 42vh 1fr;
-    height: 100vh;
-    overflow: hidden;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 
   .image-panel {
-    height: 42vh;
+    min-height: 42vh;
 
     .slide-img { position: absolute; }
 
@@ -468,7 +466,7 @@ html, body, #root {
   }
 
   .form-panel {
-    overflow-y: auto;
+    overflow-y: visible;
     padding: 40px 28px 52px;
     align-items: flex-start;
   }
@@ -483,11 +481,11 @@ html, body, #root {
 // Mobile
 @media (max-width: 480px) {
   .login-page {
-    grid-template-rows: 36vh 1fr;
+    grid-template-rows: auto 1fr;
   }
 
   .image-panel {
-    height: 36vh;
+    min-height: 36vh;
 
     .slide-text {
       bottom: 44px;
@@ -518,7 +516,7 @@ html, body, #root {
 
 // Very small screens
 @media (max-width: 360px) {
-  .image-panel { height: 32vh; }
+  .image-panel { min-height: 32vh; }
 
   .form-inner {
     h1 { font-size: 23px; }
