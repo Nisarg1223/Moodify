@@ -6,6 +6,16 @@ import { SongContext } from "../song.context";
 import Player from "./Player";
 import "../styles/expression.scss";
 import { Link } from "react-router-dom";
+
+// ── Tutorial image imports (src/assets) ────────
+import image1 from '../../../assets/image1.png'
+import image2 from '../../../assets/image2.png'
+import image3 from '../../../assets/image3.png'
+import image4 from '../../../assets/image4.png'
+import image5 from '../../../assets/image5.png'
+import image6 from '../../../assets/image6.jpeg'
+
+
 const expressionToMood = {
   "😊 Smiling": "Happy",
   "😢 Sad":     "Sad",
@@ -13,16 +23,66 @@ const expressionToMood = {
   "😐 Neutral": "Neutral",
 };
 
+const tutorialSlides = [
+  {
+    image: image1,
+    step: 1,
+    title: "Welcome to Moodify",
+    desc: "Your face picks your playlist. Let us detect your mood and match it with the perfect songs.",
+    color: "#7F77DD",
+  },
+  {
+    image: image2,
+    step: 2,
+    title: "Allow Camera Access",
+    desc: "When prompted, allow camera access so we can read your facial expression in real time.",
+    color: "#1D9E75",
+  },
+  {
+    image: image3,
+    step: 3,
+    title: "Point Your Face",
+    desc: "Look directly at the camera with good lighting. Make sure your whole face is fully visible.",
+    color: "#D85A30",
+  },
+  {
+    image: image4,
+    step: 4,
+    title: "Tap 'Scan My Mood'",
+    desc: "Hit the scan button and hold still for a moment while we detect your expression.",
+    color: "#BA7517",
+  },
+  {
+    image: image5,
+    step: 5,
+    title: "See Your Mood Badge",
+    desc: "Your detected mood appears as a badge — Happy, Sad, Excited, or Neutral.",
+    color: "#D4537E",
+  },
+  {
+    image: image6,
+    step: 6,
+    title: "Enjoy Your Playlist",
+    desc: "Songs matched to your mood load instantly. Use the player bar to play, skip, and vibe.",
+    color: "#378ADD",
+  },
+];
+
 export default function FaceExpression() {
   const videoRef          = useRef(null);
   const faceLandmarkerRef = useRef(null);
   const lastMoodRef       = useRef(null);
   const detectingRef      = useRef(false);
 
-  const [expression,  setExpression]  = useState("Not detecting");
-  const [detected,    setDetected]    = useState(false);
-  const [isDetecting, setIsDetecting] = useState(false);
+  const [expression,    setExpression]    = useState("Not detecting");
+  const [detected,      setDetected]      = useState(false);
+  const [isDetecting,   setIsDetecting]   = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // ── Tutorial state ───────────────────────────
+  const [isTutorialOpen, setIsTutorialOpen] = useState(false);
+  const [tutorialIndex,  setTutorialIndex]  = useState(0);
+  // ────────────────────────────────────────────
 
   const { loading, songs, handlegetSong } = useSong();
 
@@ -62,6 +122,33 @@ export default function FaceExpression() {
     }
   }, [songs]);
 
+  // lock body scroll when tutorial is open
+  useEffect(() => {
+    document.body.style.overflow = isTutorialOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [isTutorialOpen]);
+
+  // ── Tutorial helpers ─────────────────────────
+  function openTutorial() {
+    setTutorialIndex(0);
+    setIsTutorialOpen(true);
+    setIsSidebarOpen(false);
+  }
+  function closeTutorial() {
+    setIsTutorialOpen(false);
+  }
+  function handleNext() {
+    if (tutorialIndex < tutorialSlides.length - 1) {
+      setTutorialIndex(i => i + 1);
+    } else {
+      closeTutorial();
+    }
+  }
+  function handlePrev() {
+    if (tutorialIndex > 0) setTutorialIndex(i => i - 1);
+  }
+  // ────────────────────────────────────────────
+
   function handleDetect() {
     playSong(null);
     setDetected(false);
@@ -78,17 +165,19 @@ export default function FaceExpression() {
     seekTo(ratio);
   }
 
+  const activeSlide = tutorialSlides[tutorialIndex];
+
   return (
     <div className="app-wrapper">
 
       {/* ══ SIDEBAR OVERLAY ════════════════════ */}
-      <div 
-        className={`sidebar-overlay ${isSidebarOpen ? 'open' : ''}`}
+      <div
+        className={`sidebar-overlay ${isSidebarOpen ? "open" : ""}`}
         onClick={() => setIsSidebarOpen(false)}
       />
 
       {/* ══ SIDEBAR ══════════════════════════════ */}
-      <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+      <aside className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
         <button className="sidebar-close-btn" onClick={() => setIsSidebarOpen(false)}>✕</button>
         <div className="sidebar-logo">
           <span className="sidebar-logo-icon">🎵</span>
@@ -100,8 +189,9 @@ export default function FaceExpression() {
           <li className="sidebar-nav-item active">
             <span className="sidebar-nav-icon">🏠</span> Home
           </li>
-          <li className="sidebar-nav-item">
-            <span className="sidebar-nav-icon">📈</span> Trends
+          {/* ── clicking Tutorial opens the modal ── */}
+          <li className="sidebar-nav-item" onClick={openTutorial}>
+            <span className="sidebar-nav-icon">📈</span> Tutorial
           </li>
           <li className="sidebar-nav-item">
             <span className="sidebar-nav-icon">📚</span> Library
@@ -114,9 +204,9 @@ export default function FaceExpression() {
             <span className="sidebar-nav-icon">📅</span> Daily Weekly
           </li>
           <Link to="/about-developer" className="sidebar-nav-item about">
-  <span className="sidebar-nav-icon">🎯</span>
-  About Developer
-</Link>
+            <span className="sidebar-nav-icon">🎯</span>
+            About Developer
+          </Link>
           <li className="sidebar-nav-item">
             <span className="sidebar-nav-icon">🎲</span> Daily Mix
           </li>
@@ -137,7 +227,6 @@ export default function FaceExpression() {
             <span className="sidebar-nav-icon">🎵</span> Playlist
           </li>
         </ul>
-
       </aside>
 
       {/* ══ MAIN CONTENT ════════════════════════ */}
@@ -263,6 +352,89 @@ export default function FaceExpression() {
         </div>
 
       </div>
+
+      {/* ══ TUTORIAL MODAL ══════════════════════ */}
+      {isTutorialOpen && (
+        <div className="tutorial-overlay" onClick={closeTutorial}>
+          <div
+            className="tutorial-modal"
+            onClick={e => e.stopPropagation()}
+          >
+            {/* ── Header ── */}
+            <div className="tutorial-header">
+              <span className="tutorial-label">How to use Moodify</span>
+              <button
+                className="tutorial-close-btn"
+                onClick={closeTutorial}
+                aria-label="Close tutorial"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* ── Image slide ── */}
+            <div className="tutorial-image-wrap">
+              <img
+                key={tutorialIndex}
+                src={activeSlide.image}
+                alt={`Tutorial step ${activeSlide.step}`}
+                className="tutorial-slide-img"
+              />
+
+              {/* step counter badge */}
+              <div
+                className="tutorial-step-badge"
+                style={{ background: activeSlide.color }}
+              >
+                {activeSlide.step} / {tutorialSlides.length}
+              </div>
+
+              {/* left arrow */}
+              <button
+                className="tutorial-arrow tutorial-arrow--left"
+                onClick={handlePrev}
+                disabled={tutorialIndex === 0}
+                aria-label="Previous step"
+              >
+                ‹
+              </button>
+
+              {/* right arrow */}
+              <button
+                className="tutorial-arrow tutorial-arrow--right"
+                onClick={handleNext}
+                disabled={tutorialIndex === tutorialSlides.length - 1}
+                aria-label="Next step"
+              >
+                ›
+              </button>
+            </div>
+
+           
+
+            {/* ── Dots ── */}
+            <div className="tutorial-dots">
+              {tutorialSlides.map((_, i) => (
+                <button
+                  key={i}
+                  className={`tutorial-dot${i === tutorialIndex ? " active" : ""}`}
+                  style={
+                    i === tutorialIndex
+                      ? { background: activeSlide.color, width: "22px" }
+                      : {}
+                  }
+                  onClick={() => setTutorialIndex(i)}
+                  aria-label={`Go to step ${i + 1}`}
+                />
+              ))}
+            </div>
+
+           
+
+          </div>
+        </div>
+      )}
+      {/* ═══════════════════════════════════════ */}
 
     </div>
   );
