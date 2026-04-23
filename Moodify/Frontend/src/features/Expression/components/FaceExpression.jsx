@@ -5,7 +5,7 @@ import { useSong } from "../hooks/useSong";
 import { SongContext } from "../song.context";
 import Player from "./Player";
 import "../styles/expression.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // ── Tutorial image imports (src/assets) ────────
 import image1 from '../../../assets/image1.png'
@@ -85,7 +85,7 @@ export default function FaceExpression() {
   // ────────────────────────────────────────────
 
   const { loading, songs, handlegetSong } = useSong();
-
+  const navigate = useNavigate();
   const {
     activeSong,
     isPlaying,
@@ -194,15 +194,19 @@ export default function FaceExpression() {
             <span className="sidebar-nav-icon">📈</span> Tutorial
           </li>
           <li className="sidebar-nav-item">
-            <span className="sidebar-nav-icon">📚</span> Library
+            <span className="sidebar-nav-icon">📚</span> History
           </li>
         </ul>
 
         <p className="sidebar-section-label">Discovery</p>
         <ul className="sidebar-nav">
-          <li className="sidebar-nav-item">
-            <span className="sidebar-nav-icon">📅</span> Daily Weekly
-          </li>
+          <li
+  className="sidebar-nav-item"
+  onClick={() => navigate("/about-website")}
+>
+  <span className="sidebar-nav-icon">📅</span>
+  About Website
+</li>
           <Link to="/about-developer" className="sidebar-nav-item about">
             <span className="sidebar-nav-icon">🎯</span>
             About Developer
