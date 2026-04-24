@@ -6,6 +6,7 @@ import { SongContext } from "../song.context";
 import Player from "./Player";
 import "../styles/expression.scss";
 import { Link, useNavigate } from "react-router-dom";
+import { useHistory } from "../../history/hooks/useHistory.js";
 
 // ── Tutorial image imports (src/assets) ────────
 import image1 from '../../../assets/image1.png'
@@ -84,6 +85,8 @@ export default function FaceExpression() {
   const [tutorialIndex,  setTutorialIndex]  = useState(0);
   // ────────────────────────────────────────────
 
+  //history
+  const { handleAddToHistory } = useHistory();
   const { loading, songs, handlegetSong } = useSong();
   const navigate = useNavigate();
   const {
@@ -103,6 +106,19 @@ export default function FaceExpression() {
   useEffect(() => {
     initFaceLandmarker(faceLandmarkerRef, () => startCamera(videoRef));
   }, []);
+
+  useEffect(() => {
+  if (!activeSong || !activeSong._id) return;
+
+  // ⏱ delay to avoid fake plays
+  const timer = setTimeout(() => {
+    handleAddToHistory({ songId: activeSong._id });
+  }, 3000);
+
+  // cleanup if song changes quickly
+  return () => clearTimeout(timer);
+
+}, [activeSong]);
 
   useEffect(() => {
     const mood = expressionToMood[expression];
