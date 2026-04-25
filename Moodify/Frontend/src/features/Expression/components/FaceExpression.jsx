@@ -1,6 +1,10 @@
 // FaceExpression.jsx
 import { useEffect, useRef, useState, useContext } from "react";
-import { initFaceLandmarker, startCamera, detectExpression } from "../utils/utils.js";
+import {
+  initFaceLandmarker,
+  startCamera,
+  detectExpression,
+} from "../utils/utils.js";
 import { useSong } from "../hooks/useSong";
 import { SongContext } from "../song.context";
 import Player from "./Player";
@@ -9,18 +13,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useHistory } from "../../history/hooks/useHistory.js";
 
 // ── Tutorial image imports (src/assets) ────────
-import image1 from '../../../assets/image1.png'
-import image2 from '../../../assets/image2.png'
-import image3 from '../../../assets/image3.png'
-import image4 from '../../../assets/image4.png'
-import image5 from '../../../assets/image5.png'
-import image6 from '../../../assets/image6.jpeg'
-
+import image1 from "../../../assets/image1.png";
+import image2 from "../../../assets/image2.png";
+import image3 from "../../../assets/image3.png";
+import image4 from "../../../assets/image4.png";
+import image5 from "../../../assets/image5.png";
+import image6 from "../../../assets/image6.jpeg";
 
 const expressionToMood = {
   "😊 Smiling": "Happy",
-  "😢 Sad":     "Sad",
-  "😲 Surprise":"Excited",
+  "😢 Sad": "Sad",
+  "😲 Surprise": "Excited",
   "😐 Neutral": "Neutral",
 };
 
@@ -70,19 +73,19 @@ const tutorialSlides = [
 ];
 
 export default function FaceExpression() {
-  const videoRef          = useRef(null);
+  const videoRef = useRef(null);
   const faceLandmarkerRef = useRef(null);
-  const lastMoodRef       = useRef(null);
-  const detectingRef      = useRef(false);
+  const lastMoodRef = useRef(null);
+  const detectingRef = useRef(false);
 
-  const [expression,    setExpression]    = useState("Not detecting");
-  const [detected,      setDetected]      = useState(false);
-  const [isDetecting,   setIsDetecting]   = useState(false);
+  const [expression, setExpression] = useState("Not detecting");
+  const [detected, setDetected] = useState(false);
+  const [isDetecting, setIsDetecting] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // ── Tutorial state ───────────────────────────
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
-  const [tutorialIndex,  setTutorialIndex]  = useState(0);
+  const [tutorialIndex, setTutorialIndex] = useState(0);
   // ────────────────────────────────────────────
 
   //history
@@ -108,22 +111,21 @@ export default function FaceExpression() {
   }, []);
 
   useEffect(() => {
-  if (!activeSong || !activeSong._id) return;
+    if (!activeSong || !activeSong._id) return;
 
-  // ⏱ delay to avoid fake plays
-  const timer = setTimeout(() => {
-    handleAddToHistory({ songId: activeSong._id });
-  }, 3000);
+    // ⏱ delay to avoid fake plays
+    const timer = setTimeout(() => {
+      handleAddToHistory({ songId: activeSong._id });
+    }, 3000);
 
-  // cleanup if song changes quickly
-  return () => clearTimeout(timer);
-
-}, [activeSong]);
+    // cleanup if song changes quickly
+    return () => clearTimeout(timer);
+  }, [activeSong]);
 
   useEffect(() => {
     const mood = expressionToMood[expression];
     if (mood && mood !== lastMoodRef.current) {
-      lastMoodRef.current  = mood;
+      lastMoodRef.current = mood;
       detectingRef.current = false;
       setDetected(true);
       setIsDetecting(false);
@@ -141,7 +143,9 @@ export default function FaceExpression() {
   // lock body scroll when tutorial is open
   useEffect(() => {
     document.body.style.overflow = isTutorialOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isTutorialOpen]);
 
   // ── Tutorial helpers ─────────────────────────
@@ -155,28 +159,33 @@ export default function FaceExpression() {
   }
   function handleNext() {
     if (tutorialIndex < tutorialSlides.length - 1) {
-      setTutorialIndex(i => i + 1);
+      setTutorialIndex((i) => i + 1);
     } else {
       closeTutorial();
     }
   }
   function handlePrev() {
-    if (tutorialIndex > 0) setTutorialIndex(i => i - 1);
+    if (tutorialIndex > 0) setTutorialIndex((i) => i - 1);
   }
   // ────────────────────────────────────────────
 
   function handleDetect() {
     playSong(null);
     setDetected(false);
-    lastMoodRef.current  = null;
+    lastMoodRef.current = null;
     detectingRef.current = true;
     setIsDetecting(true);
     setExpression("Detecting...");
-    detectExpression({ videoRef, faceLandmarkerRef, detectingRef, setExpression });
+    detectExpression({
+      videoRef,
+      faceLandmarkerRef,
+      detectingRef,
+      setExpression,
+    });
   }
 
   function handleSeekClick(e) {
-    const rect  = e.currentTarget.getBoundingClientRect();
+    const rect = e.currentTarget.getBoundingClientRect();
     const ratio = (e.clientX - rect.left) / rect.width;
     seekTo(ratio);
   }
@@ -185,7 +194,6 @@ export default function FaceExpression() {
 
   return (
     <div className="app-wrapper">
-
       {/* ══ SIDEBAR OVERLAY ════════════════════ */}
       <div
         className={`sidebar-overlay ${isSidebarOpen ? "open" : ""}`}
@@ -194,7 +202,12 @@ export default function FaceExpression() {
 
       {/* ══ SIDEBAR ══════════════════════════════ */}
       <aside className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
-        <button className="sidebar-close-btn" onClick={() => setIsSidebarOpen(false)}>✕</button>
+        <button
+          className="sidebar-close-btn"
+          onClick={() => setIsSidebarOpen(false)}
+        >
+          ✕
+        </button>
         <div className="sidebar-logo">
           <span className="sidebar-logo-icon">🎵</span>
           <span className="sidebar-logo-text">Moodify</span>
@@ -209,20 +222,25 @@ export default function FaceExpression() {
           <li className="sidebar-nav-item" onClick={openTutorial}>
             <span className="sidebar-nav-icon">📈</span> Tutorial
           </li>
-          <li className="sidebar-nav-item">
-            <span className="sidebar-nav-icon">📚</span> History
+          <li className="sidebar-nav-item"
+          onClick={function(){
+            navigate("/history");
+          }}
+          >
+            <span className="sidebar-nav-icon"
+            >📚</span> History
           </li>
         </ul>
 
         <p className="sidebar-section-label">Discovery</p>
         <ul className="sidebar-nav">
           <li
-  className="sidebar-nav-item"
-  onClick={() => navigate("/about-website")}
->
-  <span className="sidebar-nav-icon">📅</span>
-  About Website
-</li>
+            className="sidebar-nav-item"
+            onClick={() => navigate("/about-website")}
+          >
+            <span className="sidebar-nav-icon">📅</span>
+            About Website
+          </li>
           <Link to="/about-developer" className="sidebar-nav-item about">
             <span className="sidebar-nav-icon">🎯</span>
             About Developer
@@ -234,8 +252,12 @@ export default function FaceExpression() {
 
         <p className="sidebar-section-label">Your Collection</p>
         <ul className="sidebar-nav">
-          <li className="sidebar-nav-item">
-            <span className="sidebar-nav-icon">❤️</span> Liked Songs
+          <li className="sidebar-nav-item" onClick={() => window.open('https://github.com/Nisarg1223/Moodify', '_blank')} style={{ cursor: 'pointer' }}>
+            <span className="sidebar-nav-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style={{ verticalAlign: 'middle' }}>
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </span> GitHub
           </li>
           <li className="sidebar-nav-item">
             <span className="sidebar-nav-icon">⬇️</span> Your Download
@@ -251,16 +273,20 @@ export default function FaceExpression() {
 
       {/* ══ MAIN CONTENT ════════════════════════ */}
       <main className="main-content">
-
         {/* Sticky top nav */}
         <div className="topnav">
           <div className="topnav-left">
-            <button className="hamburger-btn" onClick={() => setIsSidebarOpen(true)}>
+            <button
+              className="hamburger-btn"
+              onClick={() => setIsSidebarOpen(true)}
+            >
               ☰
             </button>
             <div>
               <h1 className="topnav-title">Good Evening</h1>
-              <p className="topnav-subtitle">Let your face pick your playlist</p>
+              <p className="topnav-subtitle">
+                Let your face pick your playlist
+              </p>
             </div>
           </div>
           {detected && (
@@ -271,14 +297,15 @@ export default function FaceExpression() {
         </div>
 
         <div className="content-pad">
-
           {/* Camera card */}
           <div className="camera-section">
             <div className="camera-video-wrap">
               {isDetecting && <div id="camera-live-badge">LIVE</div>}
               <video
                 ref={videoRef}
-                autoPlay playsInline muted
+                autoPlay
+                playsInline
+                muted
                 className={detected ? "blurred" : ""}
               />
             </div>
@@ -287,7 +314,8 @@ export default function FaceExpression() {
               <h2 className="camera-info-title">Face Mood Scanner</h2>
               <p className="camera-info-desc">
                 Point your camera at your face. We will detect your expression
-                and instantly build a playlist that matches how you feel right now.
+                and instantly build a playlist that matches how you feel right
+                now.
               </p>
               <p className="expression-text">
                 Expression: <span>{expression}</span>
@@ -310,13 +338,11 @@ export default function FaceExpression() {
 
           {/* Song list */}
           {detected && <Player />}
-
         </div>
       </main>
 
       {/* ══ BOTTOM PLAYER BAR ═══════════════════ */}
       <div className="player-bar">
-
         {/* Left — now playing */}
         <div className="player-bar-left">
           {activeSong ? (
@@ -344,11 +370,23 @@ export default function FaceExpression() {
         {/* Center — controls + progress */}
         <div className="player-bar-center">
           <div className="player-controls">
-            <button className="player-control-btn" onClick={prevSong} title="Previous">⏮</button>
+            <button
+              className="player-control-btn"
+              onClick={prevSong}
+              title="Previous"
+            >
+              ⏮
+            </button>
             <button id="play-btn" onClick={togglePlay}>
               {isPlaying ? "⏸" : "▶"}
             </button>
-            <button className="player-control-btn" onClick={nextSong} title="Next">⏭</button>
+            <button
+              className="player-control-btn"
+              onClick={nextSong}
+              title="Next"
+            >
+              ⏭
+            </button>
           </div>
 
           <div className="player-progress-row">
@@ -370,16 +408,12 @@ export default function FaceExpression() {
             <div className="player-volume-fill" />
           </div>
         </div>
-
       </div>
 
       {/* ══ TUTORIAL MODAL ══════════════════════ */}
       {isTutorialOpen && (
         <div className="tutorial-overlay" onClick={closeTutorial}>
-          <div
-            className="tutorial-modal"
-            onClick={e => e.stopPropagation()}
-          >
+          <div className="tutorial-modal" onClick={(e) => e.stopPropagation()}>
             {/* ── Header ── */}
             <div className="tutorial-header">
               <span className="tutorial-label">How to use Moodify</span>
@@ -430,8 +464,6 @@ export default function FaceExpression() {
               </button>
             </div>
 
-           
-
             {/* ── Dots ── */}
             <div className="tutorial-dots">
               {tutorialSlides.map((_, i) => (
@@ -448,14 +480,10 @@ export default function FaceExpression() {
                 />
               ))}
             </div>
-
-           
-
           </div>
         </div>
       )}
       {/* ═══════════════════════════════════════ */}
-
     </div>
   );
 }

@@ -6,6 +6,7 @@ import FaceExpression from './features/Expression/components/FaceExpression.jsx'
 import Protected from './features/auth/components/Protected'
 import AboutDev from './features/Expression/components/AboutDev.jsx'
 import AboutPage from './features/Expression/components/AboutPage.jsx'
+import History from './features/history/pages/History.jsx'
 const AllRoutes = () => {
   return (
     <Routes>
@@ -23,6 +24,11 @@ const AllRoutes = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/about-developer" element={<AboutDev/>}/> 
       <Route path="/about-website" element={<AboutPage/>}/>
+      <Route path="/history" element={
+        <Protected>
+          <History />
+        </Protected>
+      } />
     </Routes>
   )
 }
