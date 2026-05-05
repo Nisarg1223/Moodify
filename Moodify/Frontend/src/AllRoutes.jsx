@@ -13,7 +13,7 @@ const AllRoutes = () => {
     <Routes>
 
       <Route
-        path="/"
+        path="/hone"
         element={
           <Protected>
             <FaceExpression />
@@ -22,7 +22,7 @@ const AllRoutes = () => {
       />
 
       <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/" element={<Register />} />
       <Route path="/about-developer" element={<AboutDev/>}/> 
       <Route path="/about-website" element={<AboutPage/>}/>
       <Route path="/history" element={

@@ -44,7 +44,7 @@ const AboutPage = () => {
             <li><span>✓</span> Personalized song recommendations</li>
             <li><span>✓</span> Simple and interactive experience</li>
           </ul>
-          <Link to="/" className="btn-primary">Try Mood Scan</Link>
+          <Link to="/home" className="btn-primary">Try Mood Scan</Link>
         </div>
       </section>
 
