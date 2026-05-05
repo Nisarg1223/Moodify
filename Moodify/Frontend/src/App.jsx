@@ -1,5 +1,5 @@
 import {BrowserRouter} from 'react-router-dom'
-import AllRoutes from './allRoutes'
+import AllRoutes from './AllRoutes.jsx'
 import '../src/features/shared/styles/global.scss'
 import { AuthProvider } from './features/auth/auth.context'
 import { SongContextProvider } from './features/Expression/song.context'
