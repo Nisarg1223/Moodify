@@ -21,7 +21,7 @@ const Register = () => {
         setemail('');
         setpassword('');
         setusername('');
-        navigate('/');
+        navigate('/home');
       }
   return (
     <div className="login-page">

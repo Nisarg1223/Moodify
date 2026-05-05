@@ -90,7 +90,7 @@ const Login = () => {
         await handleLogin({email,password});
         setemail('');
         setpassword('');
-        navigate('/');
+        navigate('/home');
 
     }
   return (
