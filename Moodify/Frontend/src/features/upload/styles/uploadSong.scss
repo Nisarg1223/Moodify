@@ -1,0 +1,608 @@
+// =============================================
+//  Upload Song — Premium Dark UI
+// =============================================
+
+// ---- Tokens ----
+$bg-base: #0d0d0f;
+$surface: rgba(255, 255, 255, 0.04);
+$surface-hover: rgba(255, 255, 255, 0.08);
+$border: rgba(255, 255, 255, 0.08);
+$border-hover: rgba(255, 255, 255, 0.2);
+$text-primary: #f0f0f5;
+$text-muted: #7a7a8c;
+$accent-pink: #000000;
+$accent-purple: #000000;
+$accent-grad: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+$radius-lg: 20px;
+$radius-md: 14px;
+$radius-sm: 10px;
+$font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+// =============================================
+//  Page Shell
+// =============================================
+.upload-page {
+    position: relative;
+    min-height: 100vh;
+    background-color: $bg-base;
+    color: $text-primary;
+    font-family: $font;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 48px 24px 80px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+// =============================================
+//  Ambient Background Orbs
+// =============================================
+.upload-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.18;
+    animation: orbFloat 8s ease-in-out infinite;
+}
+
+.orb-1 {
+    width: 450px;
+    height: 450px;
+    background: $accent-pink;
+    top: -120px;
+    right: -100px;
+    animation-delay: 0s;
+}
+
+.orb-2 {
+    width: 380px;
+    height: 380px;
+    background: $accent-purple;
+    bottom: -80px;
+    left: -80px;
+    animation-delay: -3s;
+}
+
+.orb-3 {
+    width: 260px;
+    height: 260px;
+    background: #00c6ff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: -5s;
+    opacity: 0.07;
+}
+
+@keyframes orbFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-30px) scale(1.05);
+    }
+}
+
+// =============================================
+//  Main Container
+// =============================================
+.upload-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 980px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid $border;
+    border-radius: $radius-lg;
+    padding: 40px 44px 48px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+// =============================================
+//  Header
+// =============================================
+.upload-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 40px;
+
+    &__icon {
+        width: 52px;
+        height: 52px;
+        border-radius: $radius-sm;
+        background: rgb(0, 0, 0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        // box-shadow: 0 8px 24px rgba(255, 77, 157, 0.35);
+
+        svg {
+            width: 24px;
+            height: 24px;
+            color: #fff;
+        }
+    }
+
+    &__title {
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        margin: 0 0 4px;
+        background: $accent-grad;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    &__subtitle {
+        font-size: 14px;
+        color: $text-muted;
+        margin: 0;
+    }
+}
+
+// =============================================
+//  Two-column Form Grid
+// =============================================
+.upload-form {
+    width: 100%;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+}
+
+.form-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+// =============================================
+//  Drop Zones
+// =============================================
+.dropzone {
+    position: relative;
+    border: 2px dashed $border;
+    border-radius: $radius-md;
+    background: $surface;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+
+    // hide native file input
+    input[type="file"] {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+    }
+
+    &:hover,
+    &--active {
+        border-color: $accent-pink;
+        background: rgba(255, 77, 157, 0.06);
+        box-shadow: 0 0 0 4px rgba(255, 77, 157, 0.08);
+
+        .dropzone__icon-wrap svg {
+            stroke: $accent-pink;
+        }
+    }
+
+    &--filled {
+        border-style: solid;
+        border-color: rgba(123, 97, 255, 0.5);
+        background: rgba(123, 97, 255, 0.06);
+
+        &:hover {
+            border-color: $accent-purple;
+            box-shadow: 0 0 0 4px rgba(123, 97, 255, 0.1);
+        }
+    }
+
+    // Audio-specific height
+    &--audio {
+        min-height: 160px;
+    }
+
+    // Poster – square + background preview
+    &--poster {
+        min-height: 200px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        &.dropzone--filled {
+            border-style: solid;
+        }
+    }
+
+    &__inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 28px 20px;
+        text-align: center;
+        gap: 10px;
+
+        // semi-transparent overlay when image is loaded
+        &--overlay {
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: calc(#{$radius-md} - 2px);
+        }
+    }
+
+    &__icon-wrap {
+        position: relative;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 26px;
+            height: 26px;
+            stroke: $text-muted;
+            transition: stroke 0.3s ease;
+        }
+    }
+
+    &__check {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: $accent-grad;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__label {
+        font-size: 13px;
+        font-weight: 500;
+        color: $text-primary;
+        margin: 0;
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__hint {
+        font-size: 11px;
+        color: $text-muted;
+    }
+}
+
+// =============================================
+//  Waveform Animation (audio loaded)
+// =============================================
+.waveform {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 10px 20px 14px;
+
+    &__bar {
+        display: inline-block;
+        width: 3px;
+        border-radius: 4px;
+        background: $accent-grad;
+        animation: wave 1.2s ease-in-out infinite;
+        height: 8px;
+
+        @for $i from 1 through 12 {
+            &:nth-child(#{$i}) {
+                animation-delay: #{($i - 1) * 0.08}s;
+            }
+        }
+    }
+}
+
+@keyframes wave {
+
+    0%,
+    100% {
+        height: 6px;
+        opacity: 0.5;
+    }
+
+    50% {
+        height: 22px;
+        opacity: 1;
+    }
+}
+
+// =============================================
+//  Text / Date Input Fields
+// =============================================
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: $text-muted;
+}
+
+.field-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.field-icon {
+    position: absolute;
+    left: 14px;
+    width: 18px;
+    height: 18px;
+    stroke: $text-muted;
+    pointer-events: none;
+    flex-shrink: 0;
+    transition: stroke 0.3s ease;
+}
+
+.field-input {
+    width: 100%;
+    padding: 13px 14px 13px 42px;
+    background: $surface;
+    border: 1px solid $border;
+    border-radius: $radius-sm;
+    color: $text-primary;
+    font-size: 14px;
+    font-family: $font;
+    outline: none;
+    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+
+    &::placeholder {
+        color: $text-muted;
+    }
+
+    &:focus {
+        border-color: rgba(255, 77, 157, 0.5);
+        background: rgba(255, 77, 157, 0.04);
+        box-shadow: 0 0 0 3px rgba(255, 77, 157, 0.1);
+    }
+
+    &:focus+.field-icon,
+    .field-wrap:focus-within .field-icon {
+        stroke: $accent-pink;
+    }
+
+    // Date input calendar icon color
+    &--date {
+        color-scheme: dark;
+    }
+}
+
+// Fix icon stroke when input inside wrap is focused
+.field-wrap:focus-within .field-icon {
+    stroke: $accent-pink;
+}
+
+// =============================================
+//  Mood Selector (radio chips)
+// =============================================
+.mood-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.mood-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 30px;
+    background: $surface;
+    border: 1px solid $border;
+    cursor: pointer;
+    font-size: 13px;
+    color: $text-muted;
+    font-family: $font;
+    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease, transform 0.2s ease;
+    user-select: none;
+
+    input[type="radio"] {
+        display: none;
+    }
+
+    &__emoji {
+        font-size: 16px;
+        line-height: 1;
+    }
+
+    &__label {
+        font-weight: 500;
+    }
+
+    &:hover {
+        border-color: $border-hover;
+        color: $text-primary;
+        transform: translateY(-2px);
+    }
+
+    &--active {
+        border-color: var(--mood-color, #{$accent-pink});
+        background: rgba(var(--mood-color, #{$accent-pink}), 0.08);
+        color: var(--mood-color, #{$accent-pink});
+        box-shadow: 0 0 0 3px rgba(255, 77, 157, 0.12);
+
+        // Use a generic glow since CSS custom property can't be used directly in rgba()
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
+}
+
+// =============================================
+//  Submit Button
+// =============================================
+.upload-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 15px 24px;
+    border: none;
+    border-radius: $radius-sm;
+    background: $accent-grad;
+    color: #000000;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: $font;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    margin-top: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 28px rgba(255, 77, 157, 0.35);
+
+    svg {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+
+    // Shine sweep on hover
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+        transform: skewX(-20deg);
+        transition: left 0.5s ease;
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 36px rgba(255, 77, 157, 0.5);
+
+        &::after {
+            left: 160%;
+        }
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 16px rgba(255, 77, 157, 0.3);
+    }
+}
+
+// =============================================
+//  Responsive
+// =============================================
+@media (max-width: 768px) {
+    .upload-page {
+        padding: 28px 16px 60px;
+    }
+
+    .upload-container {
+        padding: 28px 20px 36px;
+        border-radius: $radius-md;
+    }
+
+    .upload-header {
+        gap: 14px;
+        margin-bottom: 28px;
+
+        &__icon {
+            width: 44px;
+            height: 44px;
+
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        &__title {
+            font-size: 22px;
+        }
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .dropzone--audio {
+        min-height: 130px;
+    }
+
+    .dropzone--poster {
+        min-height: 170px;
+    }
+
+    .mood-grid {
+        gap: 8px;
+    }
+
+    .mood-chip {
+        padding: 7px 12px;
+        font-size: 12px;
+
+        &__emoji {
+            font-size: 14px;
+        }
+    }
+}
+
+@media (max-width: 400px) {
+    .upload-container {
+        padding: 22px 14px 28px;
+    }
+
+    .upload-header__title {
+        font-size: 19px;
+    }
+
+    .upload-header__subtitle {
+        font-size: 12px;
+    }
+}

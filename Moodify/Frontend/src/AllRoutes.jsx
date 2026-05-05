@@ -7,6 +7,7 @@ import Protected from './features/auth/components/Protected'
 import AboutDev from './features/Expression/components/AboutDev.jsx'
 import AboutPage from './features/Expression/components/AboutPage.jsx'
 import History from './features/history/pages/History.jsx'
+import UploadSong from './features/upload/page/UploadSong.jsx'
 const AllRoutes = () => {
   return (
     <Routes>
@@ -29,6 +30,11 @@ const AllRoutes = () => {
           <History />
         </Protected>
       } />
+      <Route path="/uploadSongs" element={
+        <Protected>
+          <UploadSong/>
+        </Protected>
+      }/>
     </Routes>
   )
 }

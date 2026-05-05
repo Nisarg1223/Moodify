@@ -24,7 +24,8 @@ const expressionToMood = {
   "😊 Smiling": "Happy",
   "😢 Sad": "Sad",
   "😲 Surprise": "Excited",
-  "😐 Neutral": "Neutral",
+  "😐 Neutral": "Normal",
+ 
 };
 
 const tutorialSlides = [
@@ -241,13 +242,10 @@ export default function FaceExpression() {
             <span className="sidebar-nav-icon">📅</span>
             About Website
           </li>
-          <Link to="/about-developer" className="sidebar-nav-item about">
+          <Link to="/uploadSongs" className="sidebar-nav-item about">
             <span className="sidebar-nav-icon">🎯</span>
-            About Developer
+            Upload Song
           </Link>
-          <li className="sidebar-nav-item">
-            <span className="sidebar-nav-icon">🎲</span> Daily Mix
-          </li>
         </ul>
 
         <p className="sidebar-section-label">Your Collection</p>
@@ -259,15 +257,19 @@ export default function FaceExpression() {
               </svg>
             </span> GitHub
           </li>
-          <li className="sidebar-nav-item">
-            <span className="sidebar-nav-icon">⬇️</span> Your Download
-          </li>
-          <li className="sidebar-nav-item">
-            <span className="sidebar-nav-icon">🎤</span> Favorite Artist
-          </li>
-          <li className="sidebar-nav-item">
-            <span className="sidebar-nav-icon">🎵</span> Playlist
-          </li>
+          <li
+  className="sidebar-nav-item"
+  onClick={() =>
+    window.open(
+      "https://www.linkedin.com/in/nisarg-darji-008106343",
+      "_blank"
+    )
+  }
+  style={{ cursor: "pointer" }}
+>
+  <span className="sidebar-nav-icon">⬇️</span> LinkedIn
+</li>
+         
         </ul>
       </aside>
 

@@ -23,11 +23,11 @@ const songSchema = new mongoose.Schema({
     },
 
     
-    mood: {
-        type: String,
-        enum: ['Happy', 'Sad', 'Excited'],
-        required: [true, 'Mood is required']
-    },
+   mood: {
+    type: String,
+    enum: ['Normal','Happy','Sad','Excited','Jolly'],
+    required: true
+},
 
    
     releaseDate: {
