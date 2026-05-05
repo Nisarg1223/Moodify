@@ -9,6 +9,7 @@ function App() {
   return (
      <BrowserRouter>
      <AuthProvider>
+      
       <SongContextProvider>
       <AllRoutes/>
       </SongContextProvider>
