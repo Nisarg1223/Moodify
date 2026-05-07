@@ -23,8 +23,8 @@ const AllRoutes = () => {
 
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<Register />} />
-      <Route path="/about-developer" element={<AboutDev/>}/> 
-      <Route path="/about-website" element={<AboutPage/>}/>
+      <Route path="/about-developer" element={<AboutDev />} />
+      <Route path="/about-website" element={<AboutPage />} />
       <Route path="/history" element={
         <Protected>
           <History />
@@ -32,9 +32,9 @@ const AllRoutes = () => {
       } />
       <Route path="/uploadSongs" element={
         <Protected>
-          <UploadSong/>
+          <UploadSong />
         </Protected>
-      }/>
+      } />
     </Routes>
   )
 }
