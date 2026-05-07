@@ -7,6 +7,22 @@ async function addToHistory(req, res) {
         const userId = req.user.id;
         const { songId } = req.body;
 
+        if (!songId) {
+            return res.status(400).json({ message: 'songId is required' });
+        }
+
+        // Prevent duplicate entries within 5 minutes for the same song
+        const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+        const existing = await HistoryModel.findOne({
+            user: userId,
+            song: songId,
+            createdAt: { $gte: fiveMinutesAgo }
+        });
+
+        if (existing) {
+            return res.status(200).json({ message: 'Already in recent history', history: existing });
+        }
+
         const history = await HistoryModel.create({
             user: userId,
             song: songId
@@ -21,6 +37,7 @@ async function addToHistory(req, res) {
         res.status(500).json({ message: err.message });
     }
 }
+
 
 
 // Get user history

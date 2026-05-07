@@ -4,7 +4,7 @@ import { useHistory } from '../hooks/useHistory';
 import './History.scss';
 
 const History = () => {
-    const { history, loading, handleGetHistory } = useHistory();
+    const { history, loading, error, handleGetHistory } = useHistory();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -55,8 +55,16 @@ const History = () => {
                 </div>
             </div>
 
+            {/* Error State */}
+            {error && (
+                <div className="empty-history">
+                    <h2>⚠️ Could not load history</h2>
+                    <p>{error}</p>
+                </div>
+            )}
+
             {/* Empty State */}
-            {history && history.length === 0 && (
+            {!error && history && history.length === 0 && (
                  <div className="empty-history">
                      <h2>No play history yet.</h2>
                      <p>Start listening to some music!</p>

@@ -17,7 +17,7 @@ const AboutPage = () => {
             Moodify is a smart music experience that reads your facial expressions and plays songs that match your mood — instantly.
           </p>
           <div className="breadcrumb">
-            <Link to="/">Home</Link> / <span>About Moodify</span>
+            <Link to="/home">Home</Link> / <span>About Moodify</span>
           </div>
         </div>
         <div className="hero-image">

@@ -7,16 +7,20 @@ import {
 export const useHistory = () => {
 
     const [history, setHistory] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true); // start true — avoids empty-state flash
+    const [error, setError] = useState(null);
 
     // ✅ Fetch history
     async function handleGetHistory() {
         try {
             setLoading(true);
+            setError(null);
             const data = await getHistory();
-            setHistory(data.history);
+            setHistory(data.history || []);
         } catch (err) {
             console.error("Error fetching history:", err);
+            setError(err?.response?.data?.message || 'Failed to load history');
+            setHistory([]);
         } finally {
             setLoading(false);
         }
@@ -38,6 +42,7 @@ export const useHistory = () => {
     return {
         history,
         loading,
+        error,
         handleGetHistory,
         handleAddToHistory
     };
