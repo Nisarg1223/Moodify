@@ -16,9 +16,14 @@ export const AuthProvider = ({ children }) => {
     (async () => {
       try {
         const data = await getMe();
-        setuser(data.user);
+        // Only restore session if no login happened concurrently
+        setuser(current => current === null ? data.user : current);
       } catch {
-        setuser(null);
+        // ⚠️ DO NOT setuser(null) here.
+        // If getMe() is slow (Render cold start) and the user logs in while it's
+        // pending, calling setuser(null) would wipe out the freshly logged-in user
+        // and redirect them back to /login.
+        // User stays as whatever it is — null if not logged in, set if logged in.
       } finally {
         setloading(false);
       }
