@@ -81,18 +81,18 @@ export const ImagePanel = () => {
 };
 
 const Login = () => {
-    const {loading,handleLogin} = useAuth();
-    const [email,setemail] = useState('');
-    const [password,setpassword] = useState('');
-    const navigate = useNavigate()
-    async function handlesubmit(e){
-        e.preventDefault();
-        await handleLogin({email,password});
-        setemail('');
-        setpassword('');
-        navigate('/home');
+  const { loading, handleLogin } = useAuth();
+  const [email, setemail] = useState('');
+  const [password, setpassword] = useState('');
+  const navigate = useNavigate()
+  async function handlesubmit(e) {
+    e.preventDefault();
+    await handleLogin({ email, password });
+    setemail('');
+    setpassword('');
+    navigate('/home');
 
-    }
+  }
   return (
     <div className="login-page">
 
@@ -123,11 +123,11 @@ const Login = () => {
                   <path strokeLinecap="round" strokeLinejoin="round"
                     d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0L12 13.5 2.25 6.75m19.5 0A2.25 2.25 0 0019.5 4.5H4.5a2.25 2.25 0 00-2.25 2.25" />
                 </svg>
-                <input type="text" value={email}  
-                 onChange={function(e){
+                <input type="text" value={email}
+                  onChange={function (e) {
                     setemail(e.target.value);
-                 }}
-                id="email" name="email" placeholder="you@example.com" required />
+                  }}
+                  id="email" name="email" placeholder="you@example.com" required />
               </div>
             </div>
 
@@ -138,8 +138,8 @@ const Login = () => {
                   <path strokeLinecap="round" strokeLinejoin="round"
                     d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                 </svg>
-                <input type="password" value={password} onChange={function(e){
-                    setpassword(e.target.value);
+                <input type="password" value={password} onChange={function (e) {
+                  setpassword(e.target.value);
                 }} id="password" name="password" placeholder="••••••••" required />
               </div>
             </div>
@@ -151,7 +151,7 @@ const Login = () => {
           <div className="divider"><span>or</span></div>
 
           <p className="signup-prompt">
-            New here? <Link to="/register">Create an account</Link>
+            New here? <Link to="/">Create an account</Link>
           </p>
 
         </div>
