@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { ImagePanel } from './Login';
 import '../styles/login.scss';
 import { useAuth } from '../hooks/useAuth';
 
 const Register = () => {
-    const {loading,handleRegister} = useAuth();
-      const [email,setemail] = useState('');
-      const [username,setusername] = useState('');
-      const [password,setpassword] = useState('');
-      const navigate = useNavigate();
-   
-      async function handleSubmit(e){
+    const { loading, handleRegister, user } = useAuth();
+    const [email, setemail] = useState('');
+    const [username, setusername] = useState('');
+    const [password, setpassword] = useState('');
+    const [error, seterror] = useState('');
+
+    // ✅ Declarative redirect — fires after React commits user state
+    if (user) return <Navigate to="/home" replace />;
+
+    async function handleSubmit(e) {
         e.preventDefault();
-        await handleRegister({
-          username,
-          password,
-          email
-        })
-        setemail('');
-        setpassword('');
-        setusername('');
-        navigate('/home');
-      }
+        seterror('');
+        const result = await handleRegister({ username, password, email });
+        if (!result.success) {
+            seterror(result.message);
+        }
+        // No navigate() — the if (user) check above handles redirect
+    }
   return (
     <div className="login-page">
         
@@ -113,7 +113,10 @@ const Register = () => {
               </div>
             </div>
 
-            <button type="submit" className="btn-login">Create Account</button>
+            <button type="submit" className="btn-login" disabled={loading}>
+              {loading ? 'Creating…' : 'Create Account'}
+            </button>
+            {error && <p style={{ color: '#ff6b6b', fontSize: '0.85rem', marginTop: '0.5rem' }}>{error}</p>}
           </form>
 
           <div className="divider"><span>or</span></div>
