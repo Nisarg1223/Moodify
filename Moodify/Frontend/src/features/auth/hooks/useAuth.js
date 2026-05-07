@@ -1,11 +1,8 @@
-// Re-export raw API functions so auth.context.jsx can import them from here
-export { login, register, getMe, logout } from '../services/auth.api.js';
-
 import { useContext } from 'react';
 import { AuthContext } from '../auth.context.jsx';
 
 /**
- * Simple hook — just reads from AuthContext.
+ * Simple hook — reads from AuthContext.
  * All logic (getMe on mount, handleLogin, etc.) lives in AuthProvider.
  */
 export const useAuth = () => {
@@ -14,4 +11,5 @@ export const useAuth = () => {
     throw new Error('useAuth must be used inside <AuthProvider>');
   }
   return context;
-};
+};
+

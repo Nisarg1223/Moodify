@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
-import { login, register, getMe, logout } from './hooks/useAuth.js';
+import { login, register, getMe, logout } from './services/auth.api.js';
+
 
 export const AuthContext = createContext();
 
