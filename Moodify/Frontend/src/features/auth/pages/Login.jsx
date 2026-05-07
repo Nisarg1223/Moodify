@@ -84,15 +84,22 @@ const Login = () => {
   const { loading, handleLogin } = useAuth();
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
+  const [error, seterror] = useState('');
   const navigate = useNavigate()
+
   async function handlesubmit(e) {
     e.preventDefault();
-    await handleLogin({ email, password });
-    setemail('');
-    setpassword('');
-    navigate('/home');
-
+    seterror('');
+    const result = await handleLogin({ email, password });
+    if (result.success) {
+      setemail('');
+      setpassword('');
+      navigate('/home');
+    } else {
+      seterror(result.message);
+    }
   }
+
   return (
     <div className="login-page">
 
@@ -145,8 +152,12 @@ const Login = () => {
             </div>
 
             <a href="#" className="forgot">Forgot password?</a>
-            <button type="submit" className="btn-login">Sign In</button>
+            {error && <p style={{ color: '#ff6b6b', fontSize: '0.85rem', marginBottom: '0.5rem' }}>{error}</p>}
+            <button type="submit" className="btn-login" disabled={loading}>
+              {loading ? 'Signing in…' : 'Sign In'}
+            </button>
           </form>
+
 
           <div className="divider"><span>or</span></div>
 
