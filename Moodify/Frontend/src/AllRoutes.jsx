@@ -13,7 +13,7 @@ const AllRoutes = () => {
     <Routes>
 
       <Route
-        path="/hone"
+        path="/home"
         element={
           <Protected>
             <FaceExpression />
