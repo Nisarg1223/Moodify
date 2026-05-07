@@ -170,20 +170,30 @@ export default function FaceExpression() {
   }
   // ────────────────────────────────────────────
 
-  function handleDetect() {
-    playSong(null);
-    setDetected(false);
-    lastMoodRef.current = null;
-    detectingRef.current = true;
-    setIsDetecting(true);
+function handleDetect() {
+  playSong(null);
+
+  // remove blur instantly
+  setIsDetecting(true);
+  setDetected(false);
+
+  lastMoodRef.current = null;
+  detectingRef.current = true;
+
+  setExpression("Get Ready...");
+
+  // wait 1 second before detection starts
+  setTimeout(() => {
     setExpression("Detecting...");
+
     detectExpression({
       videoRef,
       faceLandmarkerRef,
       detectingRef,
       setExpression,
     });
-  }
+  }, 900);
+}
 
   function handleSeekClick(e) {
     const rect = e.currentTarget.getBoundingClientRect();
