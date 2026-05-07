@@ -30,7 +30,12 @@ async function registerUser(req, res) {
     expiresIn:'1h'
 })
 
-    res.cookie('token',token);
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+        domain: '.onrender.com'
+    });
 
     res.status(201).json({
         message:'user registered sucessfully',
@@ -75,7 +80,12 @@ async function loginUser(req,res){
         expiresIn:'1h'
     }
   )
-  res.cookie('token',token);
+  res.cookie('token', token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      domain: '.onrender.com'
+  });
 
   return res.status(200).json({
     message:'User Loggedin Succcessfully',
@@ -99,8 +109,12 @@ async function logout(req,res){
 
    await redis.set(token, Date.now().toString(),"EX",60 * 60);
 
-
-  res.clearCookie('token');
+  res.clearCookie('token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      domain: '.onrender.com'
+  });
 
   res.status(201).json({
     message:"loggedout sucessfully"

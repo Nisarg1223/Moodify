@@ -35,8 +35,12 @@ export const useAuth = ()=>{
     }
     async function handlegetme(){
         setloading(true);
-        const data = await getMe();
-        setuser(data.user);
+        try {
+            const data = await getMe();
+            setuser(data.user);
+        } catch (error) {
+            setuser(null);
+        }
         setloading(false);
     }
     async function handlelogout(){

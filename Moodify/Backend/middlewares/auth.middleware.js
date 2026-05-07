@@ -3,6 +3,8 @@ const redis = require('../src/config/cache.js');
 
 async function authUser(req,res,next){
 
+async function authUser(req,res,next){
+
  const token = req.cookies.token;
 
  if(!token){

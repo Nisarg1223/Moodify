@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const api = axios.create({
     baseURL:'https://moodify-2he8.onrender.com',
-    withCredentials:true
+    withCredentials: true
 })
 
 export async function register({username,email,password}){
