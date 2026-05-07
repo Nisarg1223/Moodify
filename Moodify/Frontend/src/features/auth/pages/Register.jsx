@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { ImagePanel } from './Login';
 import '../styles/login.scss';
 import { useAuth } from '../hooks/useAuth';
@@ -10,9 +10,12 @@ const Register = () => {
     const [username, setusername] = useState('');
     const [password, setpassword] = useState('');
     const [error, seterror] = useState('');
+    const navigate = useNavigate();
 
-    // ✅ Declarative redirect — fires after React commits user state
-    if (user) return <Navigate to="/home" replace />;
+    // Navigate AFTER React commits user state
+    useEffect(() => {
+        if (user) navigate('/home', { replace: true });
+    }, [user]);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -21,7 +24,6 @@ const Register = () => {
         if (!result.success) {
             seterror(result.message);
         }
-        // No navigate() — the if (user) check above handles redirect
     }
   return (
     <div className="login-page">

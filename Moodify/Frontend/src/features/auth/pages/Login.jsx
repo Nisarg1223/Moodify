@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/login.scss';
 import { useAuth } from '../hooks/useAuth';
 
@@ -81,14 +81,16 @@ export const ImagePanel = () => {
 };
 
 const Login = () => {
-  const { loading, handleLogin, user } = useAuth();
+  const { handleLogin, user } = useAuth();
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [error, seterror] = useState('');
+  const navigate = useNavigate();
 
-  // ✅ Declarative redirect — fires AFTER React commits the user state
-  // Avoids race condition where Protected would see user=null
-  if (user) return <Navigate to="/home" replace />;
+  // Navigate AFTER React commits user state (useEffect fires post-render)
+  useEffect(() => {
+    if (user) navigate('/home', { replace: true });
+  }, [user]);
 
   async function handlesubmit(e) {
     e.preventDefault();
@@ -97,7 +99,6 @@ const Login = () => {
     if (!result.success) {
       seterror(result.message);
     }
-    // No navigate() here — the if (user) check above handles it
   }
 
   return (

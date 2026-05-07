@@ -5,15 +5,14 @@ import { Navigate } from 'react-router-dom'
 const Protected = ({ children }) => {
   const { user, loading } = useAuth();
 
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
+  // User is logged in — always show, regardless of loading state
+  if (user) return children;
 
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
+  // No user yet, still initialising — show spinner
+  if (loading) return <h1>Loading...</h1>;
 
-  return children;
+  // No user, not loading — redirect to login
+  return <Navigate to="/login" />;
 }
 
 
