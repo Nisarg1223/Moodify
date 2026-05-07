@@ -15,114 +15,111 @@ async function registerUser(req, res) {
       message: "user already register",
     });
   }
-  const hash =await bcrypt.hash(password, 10);
-  const user =await userModel.create({
+  const hash = await bcrypt.hash(password, 10);
+  const user = await userModel.create({
     username,
     email,
     password: hash,
   });
 
   const token = jwt.sign({
-    id:user._id,
-    username:user.username
-  },process.env.JWT_SECRET,
-{
-    expiresIn:'1h'
-})
-
-    res.cookie('token', token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'none',
-        domain: '.onrender.com'
-    });
-
-    res.status(201).json({
-        message:'user registered sucessfully',
-        user:{
-            id:user._id,
-            username:user.username,
-            email:user.email
-        }
+    id: user._id,
+    username: user.username
+  }, process.env.JWT_SECRET,
+    {
+      expiresIn: '1h'
     })
-}
-async function loginUser(req,res){
-    const {username,password,email} = req.body;
 
-    const user = await userModel.findOne({
-        $or:[
-            {username},
-            {email}
-        ]
-    }).select('+password');
+  res.cookie('token', token, {
+    httpOnly: true,
+    secure: true,
+  });
 
-    if(!user){
-      return  res.status(400).json({
-            message:'invalid credentials'
-        })
+  res.status(201).json({
+    message: 'user registered sucessfully',
+    user: {
+      id: user._id,
+      username: user.username,
+      email: user.email
     }
+  })
+}
+async function loginUser(req, res) {
+  const { username, password, email } = req.body;
 
-  const isPasswordValid = await bcrypt.compare(password,user.password);
+  const user = await userModel.findOne({
+    $or: [
+      { username },
+      { email }
+    ]
+  }).select('+password');
 
-  if(!isPasswordValid){
+  if (!user) {
     return res.status(400).json({
-        message:'invalid credentials'
+      message: 'invalid credentials'
+    })
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordValid) {
+    return res.status(400).json({
+      message: 'invalid credentials'
     })
   }
 
   const token = jwt.sign(
     {
-        id:user._id,
-        username:username
+      id: user._id,
+      username: username
     },
     process.env.JWT_SECRET,
     {
-        expiresIn:'1h'
+      expiresIn: '1h'
     }
   )
   res.cookie('token', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      domain: '.onrender.com'
+    httpOnly: true,
+    secure: true,
+
   });
 
   return res.status(200).json({
-    message:'User Loggedin Succcessfully',
-    user:{
-        id:user._id,
-        username:user.username,
-        email:user.email
+    message: 'User Loggedin Succcessfully',
+    user: {
+      id: user._id,
+      username: user.username,
+      email: user.email
     }
   })
 }
-async function getMe(req,res){
+async function getMe(req, res) {
   const user = await userModel.findById(req.user.id)
 
   res.status(200).json({
-    message:'user fetched sucessfully',
+    message: 'user fetched sucessfully',
     user
   })
 }
-async function logout(req,res){
+async function logout(req, res) {
   const token = req.cookies.token;
 
-   await redis.set(token, Date.now().toString(),"EX",60 * 60);
+  await redis.set(token, Date.now().toString(), "EX", 60 * 60);
 
   res.clearCookie('token', {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      domain: '.onrender.com'
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+    domain: '.onrender.com'
   });
 
   res.status(201).json({
-    message:"loggedout sucessfully"
+    message: "loggedout sucessfully"
   })
 }
 module.exports = {
   registerUser,
   loginUser,
-   getMe,
-   logout
+  getMe,
+  logout
 };
