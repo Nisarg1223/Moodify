@@ -81,7 +81,7 @@ export const ImagePanel = () => {
 };
 
 const Login = () => {
-  const { handleLogin, user } = useAuth();
+  const { handleLogin, user, loading } = useAuth();
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [error, seterror] = useState('');

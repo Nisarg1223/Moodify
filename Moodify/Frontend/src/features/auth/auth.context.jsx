@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { login, register, getMe, logout } from './services/auth.api.js';
+import { login, register, getMe, logout, setAuthToken } from './services/auth.api.js';
 
 export const AuthContext = createContext();
 
@@ -13,6 +13,12 @@ export const AuthProvider = ({ children }) => {
 
   // Runs ONCE on app mount — restores session from cookie
   useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      _authToken = token;
+      setAuthToken(token);
+    }
+
     (async () => {
       try {
         const data = await getMe();
@@ -35,10 +41,12 @@ export const AuthProvider = ({ children }) => {
     try {
       const data = await login({ email, password });
       _authToken = data.token; // store for Bearer auth
+      localStorage.setItem('authToken', data.token);
       setuser(data.user);
       return { success: true };
     } catch (err) {
       setuser(null);
+      localStorage.removeItem('authToken');
       return { success: false, message: err?.response?.data?.message || 'Login failed' };
     } finally {
       setloading(false);
@@ -50,10 +58,12 @@ export const AuthProvider = ({ children }) => {
     try {
       const data = await register({ username, email, password });
       _authToken = data.token; // store for Bearer auth
+      localStorage.setItem('authToken', data.token);
       setuser(data.user);
       return { success: true };
     } catch (err) {
       setuser(null);
+      localStorage.removeItem('authToken');
       return { success: false, message: err?.response?.data?.message || 'Registration failed' };
     } finally {
       setloading(false);
@@ -66,6 +76,8 @@ export const AuthProvider = ({ children }) => {
       await logout();
     } finally {
       _authToken = null; // clear token on logout
+      setAuthToken(null);
+      localStorage.removeItem('authToken');
       setuser(null);
       setloading(false);
     }

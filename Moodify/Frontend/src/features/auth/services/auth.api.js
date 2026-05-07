@@ -5,21 +5,30 @@ const api = axios.create({
     withCredentials: true
 })
 
+export function setAuthToken(token) {
+  if (token) {
+    api.defaults.headers.common.Authorization = `Bearer ${token}`;
+  } else {
+    delete api.defaults.headers.common.Authorization;
+  }
+}
+
 export async function register({username,email,password}){
-  const  response = await api.post("/api/auth/register",{
+  const response = await api.post("/api/auth/register",{
         username,
         email,
         password
     })
-    return response.data;
+  setAuthToken(response.data.token);
+  return response.data;
 }
 
-export async function login({username,email,password}){
+export async function login({email,password}){
    const response = await api.post("/api/auth/login",{
-    username,
     email,
     password
    })
+   setAuthToken(response.data.token);
    return response.data;
 }
 
@@ -29,6 +38,6 @@ export async function getMe(){
 }
 
 export async function logout(){
-    const response = await api.get('api/auth/logout');
+    const response = await api.get('/api/auth/logout');
     return response.data;
 }
