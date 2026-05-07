@@ -33,6 +33,8 @@ async function registerUser(req, res) {
   res.cookie('token', token, {
     httpOnly: true,
     secure: true,
+    sameSite: 'none',
+    domain: '.onrender.com'
   });
 
   res.status(201).json({
@@ -81,7 +83,8 @@ async function loginUser(req, res) {
   res.cookie('token', token, {
     httpOnly: true,
     secure: true,
-
+    sameSite: 'none',
+    domain: '.onrender.com'
   });
 
   return res.status(200).json({
