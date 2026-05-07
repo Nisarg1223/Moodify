@@ -3,13 +3,19 @@ const redis = require('../src/config/cache.js');
 
 async function authUser(req,res,next){
 
- const token = req.cookies.token;
+ // Accept token from cookie OR Authorization: Bearer <token> header
+ const token =
+   req.cookies.token ||
+   (req.headers.authorization?.startsWith('Bearer ')
+     ? req.headers.authorization.split(' ')[1]
+     : null);
 
  if(!token){
     return res.status(401).json({
         message:'token is not provided'
     })
  }
+
 
  // check redis
  const isBlacklisted = await redis.get(token);

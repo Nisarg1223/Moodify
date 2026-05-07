@@ -1,8 +1,11 @@
 import { createContext, useState, useEffect } from "react";
 import { login, register, getMe, logout } from './services/auth.api.js';
 
-
 export const AuthContext = createContext();
+
+// Module-level token store — survives re-renders, cleared on logout/refresh
+let _authToken = null;
+export const getAuthToken = () => _authToken;
 
 export const AuthProvider = ({ children }) => {
   const [user, setuser] = useState(null);
@@ -26,6 +29,7 @@ export const AuthProvider = ({ children }) => {
     setloading(true);
     try {
       const data = await login({ email, password });
+      _authToken = data.token; // store for Bearer auth
       setuser(data.user);
       return { success: true };
     } catch (err) {
@@ -40,6 +44,7 @@ export const AuthProvider = ({ children }) => {
     setloading(true);
     try {
       const data = await register({ username, email, password });
+      _authToken = data.token; // store for Bearer auth
       setuser(data.user);
       return { success: true };
     } catch (err) {
@@ -55,6 +60,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await logout();
     } finally {
+      _authToken = null; // clear token on logout
       setuser(null);
       setloading(false);
     }
