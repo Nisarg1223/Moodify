@@ -14,7 +14,7 @@ const AboutPage = () => {
           <h1 className="hero-title">About Moodify</h1>
           <h2 className="hero-subtitle">Turn your emotions into music.</h2>
           <p className="hero-description">
-         Moodify is a smart music experience that reads your facial expressions and plays songs that match your mood — instantly.
+            Moodify is a smart music experience that reads your facial expressions and plays songs that match your mood — instantly.
           </p>
           <div className="breadcrumb">
             <Link to="/">Home</Link> / <span>About Moodify</span>
@@ -48,7 +48,9 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* 3. “HOW IT WORKS” */}
+      {/* 3. “HO
+      
+      W IT WORKS” */}
       <section className="how-it-works-section">
         <h2 className="section-title">How Moodify Works</h2>
         <div className="steps-container">
@@ -74,7 +76,7 @@ const AboutPage = () => {
           </div>
         </div>
         <p className="how-summary">
-           Make your facial expression, click on "Scan Mood" or "Scan Again", and enjoy music that truly matches your feelings.
+          Make your facial expression, click on "Scan Mood" or "Scan Again", and enjoy music that truly matches your feelings.
         </p>
       </section>
 
