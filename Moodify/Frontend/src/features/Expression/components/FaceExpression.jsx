@@ -308,7 +308,7 @@ export default function FaceExpression() {
                 autoPlay
                 playsInline
                 muted
-                className={detected ? "blurred" : ""}
+                className={detected && !isDetecting ? "blurred" : ""}
               />
             </div>
 
