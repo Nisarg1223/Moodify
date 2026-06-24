@@ -29,14 +29,30 @@ Whether you're feeling happy, sad, angry, surprised, or relaxed, Moodify instant
 Music often reflects our emotions. Moodify aims to make music selection effortless by automatically recommending songs that align with the user's current mood, providing a more engaging and personalized listening experience.
 
 
-## 🏠 Home Page
+## 🏠 Home
 
-![Home Page](./Frontend/src/assets/screenshots/home.png)
+![Home](./Frontend/src/assets/Home.png)
 
-## 🎭 Mood Detection
+## 😊 Mood Detection
 
-![Mood Detection](./Frontend/src/assets/screenshots/mood-detection.png)
+![Mood Detection](./Frontend/src/assets/Mood%20Detection.png)
 
-## 🎵 Song Recommendations
+## 🔐 Authentication
 
-![Song Recommendations](./Frontend/src/assets/screenshots/recommendations.png)
+![Authentication](./Frontend/src/assets/Authentication.png)
+
+## 📖 Tutorial
+
+![Tutorial](./Frontend/src/assets/Tutorial.png)
+
+## 🎵 Upload Songs
+
+![Upload Songs](./Frontend/src/assets/Upload%20Songs.png)
+
+## 📜 History
+
+![History](./Frontend/src/assets/History.png)
+
+## ℹ️ About
+
+![About](./Frontend/src/assets/About.png)
