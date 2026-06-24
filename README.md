@@ -39,20 +39,20 @@ Music often reflects our emotions. Moodify aims to make music selection effortle
 
 ## 🔐 Authentication
 
-<img src"https://github.com/Nisarg1223/Moodify/blob/main/Moodify/Frontend/src/assets/Authentication.png"></img>
+<img src="https://github.com/Nisarg1223/Moodify/blob/main/Moodify/Frontend/src/assets/Authentication.png"></img>
 
 ## 📖 Tutorial
 
-<img src"https://github.com/Nisarg1223/Moodify/blob/main/Moodify/Frontend/src/assets/Tutorial.png"></img>
+<img src="https://github.com/Nisarg1223/Moodify/blob/main/Moodify/Frontend/src/assets/Tutorial.png"></img>
 
 ## 🎵 Upload Songs
 
-<img src"https://github.com/Nisarg1223/Moodify/blob/main/Moodify/Frontend/src/assets/Upload%20Songs.png"></img>
+<img src="https://github.com/Nisarg1223/Moodify/blob/main/Moodify/Frontend/src/assets/Upload%20Songs.png"></img>
 
 ## 📜 History
 
-<img src"https://github.com/Nisarg1223/Moodify/blob/main/Moodify/Frontend/src/assets/History.png"></img>
+<img src="https://github.com/Nisarg1223/Moodify/blob/main/Moodify/Frontend/src/assets/History.png"></img>
 
 ## ℹ️ About
 
-<img src"https://github.com/Nisarg1223/Moodify/blob/main/Moodify/Frontend/src/assets/About.png"></img>
+<img src="https://github.com/Nisarg1223/Moodify/blob/main/Moodify/Frontend/src/assets/About.png"></img>
