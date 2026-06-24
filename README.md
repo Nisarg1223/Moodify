@@ -32,6 +32,7 @@ Music often reflects our emotions. Moodify aims to make music selection effortle
 ## 🏠 Home
 
 ![Home](.Moodify/Frontend/src/assets/Home.png)
+<img src="https://github.com/Nisarg1223/Moodify/blob/main/Moodify/Frontend/src/assets/Home.png"></img>
 
 ## 😊 Mood Detection
 
